@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <div class="lang-en">
+    <h2>Safety, privacy, and real limits</h2>
+    <p>This page explains what the camera actually does, what it cannot do, and the safeguards you must keep in place before using it in a real space.</p>
+  </div>
+  <div class="lang-ar">
+    <h2>السلامة والخصوصية والحدود الحقيقية</h2>
+    <p>توضح هذه الصفحة ما تفعله الكاميرا فعلياً، وما لا تستطيع فعله، والضمانات التي يجب الالتزام بها قبل استخدامها في مكان حقيقي.</p>
+  </div>
+</section>
+
+<div class="about-grid">
+  <section class="card about-card">
+    <div class="lang-en">
+      <h3>Implemented capabilities</h3>
+      <ul>
+        <li>Live people counting with per-session tracking IDs and crowd alerts.</li>
+        <li>Face detection and consent-based recognition against the local registry, showing name and photo.</li>
+        <li>Speech detection, local Whisper transcription, language detection, and translation.</li>
+        <li>Meaningful movement snapshots plus rule-based gesture interpretation (greeting, raised hand, stop, welcome, yes/no).</li>
+        <li>License plate OCR with make, model, and owner from the local vehicle registry.</li>
+        <li>Visible restricted-item detection with an optional loud browser siren and spoken warning.</li>
+        <li>Heuristic eyewear classification, including an advisory "possible smart glasses" warning.</li>
+        <li>Company knowledge assistant with local retrieval and optional LLM reasoning.</li>
+        <li>Event evidence archive: snapshots, clips, audio, transcripts, translations, risk assessments, and audit records.</li>
+      </ul>
+    </div>
+    <div class="lang-ar">
+      <h3>القدرات المنفّذة</h3>
+      <ul>
+        <li>عدّ الأشخاص مباشرة مع معرفات تتبع لكل جلسة وتنبيهات الازدحام.</li>
+        <li>كشف الوجوه والتعرف عليها بموافقة مسبقة عبر السجل المحلي، مع عرض الاسم والصورة.</li>
+        <li>كشف الكلام ونسخه محلياً عبر Whisper وتحديد اللغة والترجمة.</li>
+        <li>حفظ لقطات للحركة ذات المعنى وتفسير الإيماءات: التحية، رفع اليد، التوقف، الترحيب، نعم/لا.</li>
+        <li>قراءة لوحات السيارات وإرجاع الشركة والطراز والمالك من سجل المركبات المحلي.</li>
+        <li>كشف الأشياء الخطرة الظاهرة مع صافرة إنذار صوتية وتحذير منطوق اختياري.</li>
+        <li>تصنيف تقريبي للنظارات، بما في ذلك تحذير استشاري عن "احتمال نظارة ذكية".</li>
+        <li>مساعد معرفة الشركة باسترجاع محلي وإمكانية استخدام نموذج لغوي أعمق.</li>
+        <li>أرشيف أدلة: لقطات، مقاطع، صوت، نصوص، ترجمات، تقييمات مخاطر، وسجل تدقيق.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card about-card danger-about">
+    <div class="lang-en">
+      <h3>Deliberately not implemented</h3>
+      <ul>
+        <li><strong>No nude or "without clothes" imagery, no strip-search simulation, and no body reconstruction.</strong> The original request asked for this; it is not legal or ethical to produce non-consensual intimate imagery. The safe alternative is the privacy-safe risk inspection: bodies are blurred, only visible objects are flagged, and evidence is reviewed by a human.</li>
+        <li><strong>No concealed-weapon or body-content detection.</strong> An ordinary camera cannot see through clothing or inside bags. AI is not used to pretend otherwise.</li>
+        <li><strong>No fingerprint capture.</strong> A webcam is not a fingerprint scanner. The system stores face embeddings and profile data only.</li>
+        <li><strong>No autonomous enforcement.</strong> The system never decides guilt, identity certainty, or punishment. Every alert requires human verification.</li>
+        <li><strong>No liveness guarantee.</strong> Ordinary face recognition can be fooled by photos or deepfakes. Use certified liveness hardware for access control.</li>
+      </ul>
+    </div>
+    <div class="lang-ar">
+      <h3>ما لم يتم تنفيذه عمداً</h3>
+      <ul>
+        <li><strong>لا صور عارية أو "بدون ملابس"، ولا محاكاة تفتيش جسدي، ولا إعادة بناء للجسم.</strong> طلب المستند الأصلي ذلك، لكن إنتاج صور حميمية دون موافقة غير قانوني وغير أخلاقي. البديل الآمن هو فحص المخاطر الذي يحمي الخصوصية: يتم تمويه الأجساد، وتُعرض الأشياء الظاهرة فقط، ويراجع إنسان الأدلة.</li>
+        <li><strong>لا كشف للأسلحة المخفية أو محتوى الجسم.</strong> الكاميرا العادية لا ترى عبر الملابس أو الحقائب، ولا يدّعي النظام خلاف ذلك.</li>
+        <li><strong>لا أخذ بصمات.</strong> كاميرا الويب ليست ماسحاً للبصمات. يحفظ النظام بصمة الوجه الرقمية وبيانات الملف فقط.</li>
+        <li><strong>لا تنفيذ تلقائي للعقوبات.</strong> لا يقرر النظام الإدانة أو الهوية بشكل قاطع أو العقوبة. كل تنبيه يحتاج تحققاً بشرياً.</li>
+        <li><strong>لا ضمان ضد انتحال الوجوه.</strong> يمكن خداع التعرف التقليدي بصور أو فيديوهات مزيفة. استخدم أجهزة كشف حياة معتمدة للتحكم بالدخول.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card about-card">
+    <div class="lang-en">
+      <h3>Legal and operational checklist</h3>
+      <ul>
+        <li>Post clear signs in every monitored area and state that video, face recognition, and possibly audio are in use.</li>
+        <li>Obtain informed consent where required and record how consent can be withdrawn.</li>
+        <li>Limit access to authorized operators and change the default password before deployment.</li>
+        <li>Set a short retention period and delete evidence that is no longer needed.</li>
+        <li>Do not use the system to make decisions about employment, credit, health, or access to protected services.</li>
+        <li>Do not base a real security response only on AI output. Verify with a human, and keep an incident log.</li>
+        <li>Audio recording laws vary widely. Disable audio monitoring unless you have a lawful basis.</li>
+      </ul>
+    </div>
+    <div class="lang-ar">
+      <h3>قائمة الامتثال والتشغيل</h3>
+      <ul>
+        <li>ضع لافتات واضحة في كل منطقة مراقبة، وبيّن استخدام الفيديو والتعرف على الوجوه والصوت إن وجد.</li>
+        <li>احصل على الموافقة المستنيرة حيث يلزم، وسجّل طريقة سحب الموافقة.</li>
+        <li>اقصر الوصول على المشغلين المصرح لهم، وغيّر كلمة المرور الافتراضية قبل التشغيل.</li>
+        <li>حدد مدة حفظ قصيرة واحذف الأدلة غير الضرورية.</li>
+        <li>لا تستخدم النظام لاتخاذ قرارات توظيف أو ائتمان أو صحة أو وصول إلى خدمات محمية.</li>
+        <li>لا تبنِ استجابة أمنية حقيقية على مخرجات الذكاء الاصطناعي وحدها. تحقق بشرياً واحتفظ بسجل للحوادث.</li>
+        <li>تختلف قوانين تسجيل الصوت بين الدول. أوقف مراقبة الصوت ما لم يكن لديك أساس قانوني.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card about-card">
+    <div class="lang-en">
+      <h3>Accuracy limits you should know</h3>
+      <ul>
+        <li>COCO object models detect visible items such as knives poorly in low light or occlusion. The optional custom weapon model needs a proper dataset and validation before real use.</li>
+        <li>Face matching is probabilistic. The score threshold can be tuned, but false matches and missed faces will happen, especially at distance or with face coverings.</li>
+        <li>Plate OCR is sensitive to angle, dirt, motion blur, and regional scripts. Make/model data is only as accurate as the registry you provide.</li>
+        <li>Smart-glasses detection is heuristic and advisory. It cannot prove that a camera is embedded in eyewear.</li>
+        <li>Speech transcription can mishear names and numbers. Translation may be rate-limited or unavailable; the original language is always kept.</li>
+        <li>Gesture interpretation covers a small rule-based vocabulary, not full sign language. It is not a certified accessibility interpreter.</li>
+      </ul>
+    </div>
+    <div class="lang-ar">
+      <h3>حدود الدقة التي يجب معرفتها</h3>
+      <ul>
+        <li>نماذج COCO تكتشف العناصر الظاهرة مثل السكاكين بشكل ضعيف في الإضاءة المنخفضة أو عند الحجب. نموذج الأسلحة المخصص يحتاج بيانات وتحققاً قبل الاستخدام الحقيقي.</li>
+        <li>مطابقة الوجوه احتمالية. يمكن ضبط العتبة، لكن ستحدث مطابقات خاطئة أو وجوه مفقودة، خاصة على بعد أو مع تغطية الوجه.</li>
+        <li>قراءة اللوحات تتأثر بالزاوية والأوساخ والاهتزاز والخط الإقليمي. بيانات الشركة والطراز دقيقة بقدر دقة السجل الذي تقدمه.</li>
+        <li>كشف النظارات الذكية تقريبي واستشاري، ولا يمكنه إثبات وجود كاميرا داخل النظارة.</li>
+        <li>قد يخطئ نسخ الكلام في الأسماء والأرقام. قد تكون الترجمة محدودة أو غير متاحة؛ اللغة الأصلية محفوظة دائماً.</li>
+        <li>تفسير الإيماءات يغطي مفردات محددة بقواعد، وليس لغة إشارة كاملة، وليس مترجماً معتمداً.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card about-card">
+    <div class="lang-en">
+      <h3>Data and retention</h3>
+      <p>Evidence is stored locally under <code>data/</code>: snapshots, clips, audio, registered photos, the SQLite database, and knowledge documents. Nothing is uploaded by default. Translation lookups and optional LLM calls send only the text you enable to the configured external service. Set <code>retention_days</code> in Settings and run retention cleanup periodically. Back up the database and registry if the system is used operationally.</p>
+      <h3>Model licenses</h3>
+      <p>OpenCV YuNet/SFace models: Apache-2.0 (OpenCV Zoo). Ultralytics YOLOv8: AGPL-3.0, which has strong copyleft obligations for network services; obtain a commercial license if needed. Faster-Whisper and CTranslate2: MIT. RapidOCR: Apache-2.0. Review all licenses before commercial deployment.</p>
+    </div>
+    <div class="lang-ar">
+      <h3>البيانات والاحتفاظ</h3>
+      <p>تُحفظ الأدلة محلياً داخل <code>data/</code>: اللقطات والمقاطع والصوت وصور المسجلين وقاعدة SQLite ومستندات المعرفة. لا يتم رفع شيء افتراضياً. ترسل خدمات الترجمة والنموذج اللغوي النص المفعّل فقط إلى الخدمة الخارجية المحددة. اضبط <code>retention_days</code> في الإعدادات وشغّل التنظيف الدوري. احتفظ بنسخة احتياطية من قاعدة البيانات والسجل عند الاستخدام الفعلي.</p>
+      <h3>تراخيص النماذج</h3>
+      <p>نماذج OpenCV YuNet/SFace: Apache-2.0. Ultralytics YOLOv8: AGPL-3.0 وله التزامات قوية تجاه الخدمات الشبكية؛ احصل على ترخيص تجاري عند الحاجة. Faster-Whisper وCTranslate2: MIT. RapidOCR: Apache-2.0. راجع جميع التراخيص قبل النشر التجاري.</p>
+    </div>
+  </section>
+
+  <section class="card about-card">
+    <div class="lang-en">
+      <h3>Emergency and security notice</h3>
+      <p>This software is a demonstration and operational aid, not a certified security system, medical device, or emergency service. If someone is in immediate danger, call your local emergency number and follow your organization's security procedure. Do not confront a person based only on an AI alert. Keep a safe distance and let trained staff handle the situation.</p>
+    </div>
+    <div class="lang-ar">
+      <h3>إشعار الطوارئ والأمن</h3>
+      <p>هذا البرنامج عرض توضيحي وأداة مساعدة تشغيلية، وليس نظاماً أمنياً معتمداً ولا جهازاً طبياً ولا خدمة طوارئ. إذا كان شخص في خطر فوري، اتصل برقم الطوارئ المحلي واتبع إجراءات الأمن في مؤسستك. لا تواجه أي شخص بناءً على تنبيه ذكاء اصطناعي فقط. ابق على مسافة آمنة ودع الموظفين المدربين يتعاملون مع الموقف.</p>
+    </div>
+  </section>
+</div>
+{% endblock %}

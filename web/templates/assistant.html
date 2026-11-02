@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <div>
+    <h2 data-i18n="assistant.heading">Ask the security agent</h2>
+    <p data-i18n="assistant.intro">Questions are answered from the company knowledge base. With an LLM configured, the agent can reason more deeply; without one, it uses local retrieval. A snapshot is saved with each kiosk question.</p>
+  </div>
+  <div class="intro-actions">
+    <span class="chip" id="provider-chip">local-rag</span>
+  </div>
+</section>
+
+<div class="assistant-layout">
+  <section class="card chat-card">
+    <div class="card-head">
+      <div class="chat-agent">
+        <div class="agent-avatar"><svg><use href="#i-agent"></use></svg></div>
+        <div>
+          <h2 data-i18n="assistant.agentName">Sentinel knowledge agent</h2>
+          <p class="card-sub" data-i18n="assistant.agentSub">Company knowledge - not a general chatbot</p>
+        </div>
+      </div>
+      <span class="chip"><span class="chip-dot"></span><span data-i18n="assistant.ready">Ready</span></span>
+    </div>
+
+    <div class="chat-log" id="chat-log">
+      <div class="chat-welcome">
+        <div class="chat-welcome-icon"><svg><use href="#i-agent"></use></svg></div>
+        <h3 data-i18n="assistant.welcomeTitle">What would you like to know?</h3>
+        <p data-i18n="assistant.welcomeText">I can answer questions about the company, meetings, safety policy, and registered vehicles using the documents on the Knowledge page.</p>
+        <div class="quick-prompts" id="quick-prompts">
+          <button data-q="What are the reception hours?">What are the reception hours?</button>
+          <button data-q="What is the visitor safety policy?">What is the visitor safety policy?</button>
+          <button data-q="How do I book a meeting room?">How do I book a meeting room?</button>
+        </div>
+      </div>
+    </div>
+
+    <form class="chat-form" id="ask-form">
+      <textarea id="ask-input" rows="2" maxlength="2000" placeholder="Ask about the company..." data-i18n-placeholder="assistant.placeholder"></textarea>
+      <div class="chat-form-foot">
+        <label class="check-row">
+          <input type="checkbox" id="capture-question" checked>
+          <span data-i18n="assistant.capture">Save a camera snapshot with this question</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="speak-answers">
+          <span data-i18n="assistant.speak">Speak the answer aloud</span>
+        </label>
+        <button class="btn btn-primary" type="submit" id="ask-submit">
+          <svg><use href="#i-agent"></use></svg><span data-i18n="assistant.ask">Ask AI</span>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <aside class="assistant-side">
+    <section class="card assess-card">
+      <div class="card-head">
+        <div>
+          <h2 data-i18n="assistant.assessment">Risk assessment</h2>
+          <p class="card-sub" data-i18n="assistant.assessmentSub">AI summary of the last 24 hours</p>
+        </div>
+        <svg class="head-icon"><use href="#i-shield"></use></svg>
+      </div>
+      <div class="risk-orb-wrap">
+        <div class="risk-orb" id="risk-orb"><span id="risk-level">—</span><small data-i18n="assistant.risk">RISK</small></div>
+      </div>
+      <div class="assess-body" id="assess-body">
+        <p class="muted" data-i18n="assistant.assessHint">Generate an advisory assessment from recent camera events. A human must verify every conclusion.</p>
+      </div>
+      <button class="btn btn-primary btn-block" id="assess-btn" data-i18n="assistant.generate">Generate assessment</button>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2 data-i18n="assistant.howTitle">How answers are built</h2></div>
+      <ul class="plain-list">
+        <li data-i18n="assistant.how1">The question is matched against company documents using TF-IDF retrieval.</li>
+        <li data-i18n="assistant.how2">An optional OpenAI-compatible model reads the retrieved passages and answers.</li>
+        <li data-i18n="assistant.how3">If the answer is not in the documents, the agent says so instead of inventing facts.</li>
+        <li data-i18n="assistant.how4">Sources are shown with every answer for verification.</li>
+      </ul>
+      <div class="mini-note" data-i18n="assistant.miniNote">Configure OPENAI_API_KEY or a local OpenAI-compatible endpoint in .env for deeper reasoning.</div>
+    </section>
+  </aside>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/assistant.js" defer></script>{% endblock %}

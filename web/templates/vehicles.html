@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <div>
+    <h2 data-i18n="vehicles.heading">Vehicle registry &amp; plate intelligence</h2>
+    <p data-i18n="vehicles.intro">Map a normalized plate to a make, model, and owner. The camera reads plates automatically near detected vehicles and on demand.</p>
+  </div>
+  <div class="intro-actions">
+    <button class="btn" id="scan-plate"><svg><use href="#i-scan"></use></svg><span data-i18n="vehicles.scanNow">Read plate now</span></button>
+    <button class="btn btn-primary" id="add-vehicle"><svg><use href="#i-plus"></use></svg><span data-i18n="vehicles.add">Register vehicle</span></button>
+  </div>
+</section>
+
+<section class="notice-banner">
+  <svg><use href="#i-info"></use></svg>
+  <div>
+    <strong data-i18n="vehicles.limitTitle">How make and model matching works</strong>
+    <span data-i18n="vehicles.limitText">A plate alone cannot identify a car company or model unless it is linked to a registry. This page is that local registry. For external national registries, configure VEHICLE_LOOKUP_URL in the environment. OCR accuracy depends on lighting, angle, and plate size.</span>
+  </div>
+</section>
+
+<section class="scan-result-card" id="scan-result" hidden>
+  <div class="scan-result-head">
+    <div>
+      <div class="eyebrow" data-i18n="vehicles.lastScan">Latest plate scan</div>
+      <div class="plate-plate" id="scan-plate-value">—</div>
+    </div>
+    <button class="icon-btn" id="scan-close"><svg><use href="#i-close"></use></svg></button>
+  </div>
+  <div class="scan-result-body">
+    <div class="kv"><span data-i18n="vehicles.make">Make</span><strong id="scan-make">—</strong></div>
+    <div class="kv"><span data-i18n="vehicles.model">Model</span><strong id="scan-model">—</strong></div>
+    <div class="kv"><span data-i18n="vehicles.owner">Owner</span><strong id="scan-owner">—</strong></div>
+    <div class="kv"><span data-i18n="vehicles.confidence">OCR confidence</span><strong id="scan-confidence">—</strong></div>
+  </div>
+  <div class="scan-result-foot">
+    <span class="badge" id="scan-registered">—</span>
+    <a class="link" id="scan-evidence" href="#" target="_blank" hidden data-i18n="vehicles.viewEvidence">View evidence</a>
+  </div>
+</section>
+
+<section class="registry-head">
+  <div class="muted" id="vehicles-count">—</div>
+  <div class="muted" data-i18n="vehicles.moderation">Only authorized operators can edit this registry.</div>
+</section>
+
+<section class="card table-card">
+  <div class="table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th data-i18n="vehicles.plate">Plate</th>
+          <th data-i18n="vehicles.make">Make</th>
+          <th data-i18n="vehicles.model">Model</th>
+          <th data-i18n="vehicles.color">Color</th>
+          <th data-i18n="vehicles.owner">Owner</th>
+          <th data-i18n="vehicles.notes">Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="vehicles-body">
+        <tr><td colspan="7"><div class="empty-state" data-i18n="common.loading">Loading...</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<template id="vehicle-modal-template">
+  <form class="stack-form" id="vehicle-form">
+    <div class="form-grid two">
+      <label class="field">
+        <span data-i18n="vehicles.plate">Plate</span>
+        <input type="text" name="plate" required maxlength="12" placeholder="ABC-1234" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="vehicles.make">Make</span>
+        <input type="text" name="make" maxlength="80" placeholder="Toyota" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="vehicles.model">Model</span>
+        <input type="text" name="model" maxlength="80" placeholder="Corolla" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="vehicles.color">Color</span>
+        <input type="text" name="color" maxlength="40" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="vehicles.owner">Owner</span>
+        <input type="text" name="owner" maxlength="120" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="vehicles.notes">Notes</span>
+        <input type="text" name="notes" maxlength="1000" autocomplete="off">
+      </label>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn btn-ghost modal-close" data-i18n="common.cancel">Cancel</button>
+      <button type="submit" class="btn btn-primary" data-i18n="common.save">Save vehicle</button>
+    </div>
+  </form>
+</template>
+{% endblock %}
+{% block scripts %}<script src="/static/js/vehicles.js" defer></script>{% endblock %}

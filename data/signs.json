@@ -1,0 +1,34 @@
+{
+  "wave": {
+    "en": "Greeting / hello",
+    "ar": "تحية / مرحبا"
+  },
+  "raised_hand": {
+    "en": "Asking for attention or help",
+    "ar": "طلب الانتباه أو المساعدة"
+  },
+  "both_hands_raised": {
+    "en": "Attention / please stop",
+    "ar": "انتباه / توقف من فضلك"
+  },
+  "arms_out": {
+    "en": "Open arms / welcome or attention",
+    "ar": "أذرع مفتوحة / ترحيب أو انتباه"
+  },
+  "arm_extended": {
+    "en": "Pointing or stop signal - verify visually",
+    "ar": "إشارة توقف أو إشارة اتجاه - تحقق بصرياً"
+  },
+  "head_nod": {
+    "en": "Yes / agreement",
+    "ar": "نعم / موافقة"
+  },
+  "head_shake": {
+    "en": "No / disagreement",
+    "ar": "لا / رفض"
+  },
+  "phone_to_ear": {
+    "en": "Talking on a phone",
+    "ar": "يتحدث عبر الهاتف"
+  }
+}

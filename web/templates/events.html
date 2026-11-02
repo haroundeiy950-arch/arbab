@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <div>
+    <h2 data-i18n="events.heading">Evidence archive</h2>
+    <p data-i18n="events.intro">Every AI alert, translation, speech capture, and manual snapshot is stored with its evidence here.</p>
+  </div>
+  <div class="intro-actions">
+    <button class="btn" id="refresh-events"><svg><use href="#i-bolt"></use></svg><span data-i18n="common.refresh">Refresh</span></button>
+  </div>
+</section>
+
+<section class="card filter-card">
+  <div class="filter-row">
+    <label class="field compact">
+      <span data-i18n="events.kind">Event type</span>
+      <select id="filter-kind">
+        <option value="" data-i18n="events.allKinds">All types</option>
+        <option value="threat" data-i18n="kind.threat">Threat</option>
+        <option value="face_known" data-i18n="kind.face_known">Known face</option>
+        <option value="face_unknown" data-i18n="kind.face_unknown">Unknown face</option>
+        <option value="speech" data-i18n="kind.speech">Speech</option>
+        <option value="question" data-i18n="kind.question">Question</option>
+        <option value="gesture" data-i18n="kind.gesture">Gesture</option>
+        <option value="plate" data-i18n="kind.plate">Plate</option>
+        <option value="motion" data-i18n="kind.motion">Motion</option>
+        <option value="phone" data-i18n="kind.phone">Phone use</option>
+        <option value="crowd" data-i18n="kind.crowd">Crowd</option>
+        <option value="glasses" data-i18n="kind.glasses">Eyewear</option>
+        <option value="risk_scan" data-i18n="kind.risk_scan">Risk inspection</option>
+        <option value="snapshot" data-i18n="kind.snapshot">Snapshot</option>
+        <option value="inquiry" data-i18n="kind.inquiry">Kiosk question</option>
+      </select>
+    </label>
+    <label class="field compact">
+      <span data-i18n="events.severity">Severity</span>
+      <select id="filter-severity">
+        <option value="" data-i18n="events.allSeverities">All levels</option>
+        <option value="critical" data-i18n="severity.critical">Critical</option>
+        <option value="warning" data-i18n="severity.warning">Warning</option>
+        <option value="info" data-i18n="severity.info">Info</option>
+        <option value="success" data-i18n="severity.success">Success</option>
+      </select>
+    </label>
+    <label class="field compact grow">
+      <span data-i18n="common.search">Search</span>
+      <input type="search" id="filter-search" placeholder="Name, transcript, or title...">
+    </label>
+    <button class="btn btn-primary" id="apply-filters" data-i18n="events.apply">Apply filters</button>
+  </div>
+</section>
+
+<section class="archive-head">
+  <div class="muted" id="events-count">—</div>
+  <div class="muted"><span data-i18n="events.clickHint">Select a card to inspect evidence and translations.</span></div>
+</section>
+
+<div class="event-grid" id="events-grid">
+  <div class="empty-state" data-i18n="common.loading">Loading...</div>
+</div>
+
+<div class="load-more-wrap">
+  <button class="btn btn-ghost" id="load-more" hidden data-i18n="common.loadMore">Load more</button>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/events.js" defer></script>{% endblock %}

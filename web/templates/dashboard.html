@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dash-layout">
+  <div class="dash-main">
+    <section class="card feed-card">
+      <div class="card-head">
+        <div class="head-left">
+          <span class="live-chip"><span class="live-dot"></span><span data-i18n="dash.live">Live camera</span></span>
+          <span class="muted mono" id="camera-source">source ...</span>
+        </div>
+        <div class="head-right">
+          <span class="chip" id="ai-state"><span class="chip-dot"></span><span data-i18n="dash.aiOn">AI on</span></span>
+          <span class="chip" id="audio-state"><span class="chip-dot"></span><span data-i18n="dash.audioOn">Audio on</span></span>
+          <span class="chip chip-rec" id="rec-state" hidden><span class="live-dot"></span><span data-i18n="dash.recording">Recording</span></span>
+        </div>
+      </div>
+
+      <div class="video-wrap" id="video-wrap">
+        <img id="live-video" src="/video_feed" alt="Live AI camera feed">
+        <div class="video-scanline"></div>
+        <div class="video-badge tl"><span class="live-dot"></span><span data-i18n="dash.liveFeed">Live feed</span></div>
+        <div class="video-badge br mono" id="video-fps">-- fps</div>
+        <div class="video-badge bl" id="video-demo" hidden data-i18n="dash.demoBadge">DEMO FEED - NO CAMERA</div>
+      </div>
+
+      <div class="feed-actions">
+        <button class="btn btn-primary" id="btn-snapshot">
+          <svg><use href="#i-capture"></use></svg><span data-i18n="dash.snapshot">Save snapshot</span>
+        </button>
+        <button class="btn" id="btn-record">
+          <svg><use href="#i-play"></use></svg><span id="record-label" data-i18n="dash.startRecording">Start recording</span>
+        </button>
+        <button class="btn" id="btn-risk">
+          <svg><use href="#i-shield"></use></svg><span data-i18n="dash.riskScan">Risk inspection</span>
+        </button>
+        <button class="btn" id="btn-plate">
+          <svg><use href="#i-scan"></use></svg><span data-i18n="dash.scanPlate">Read plate</span>
+        </button>
+        <button class="icon-btn" id="btn-fullscreen" title="Fullscreen"><svg><use href="#i-expand"></use></svg></button>
+        <span class="feed-updated" id="feed-updated"></span>
+      </div>
+    </section>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="dash.peopleNow">People now</div>
+        <div class="stat-value" id="stat-people">0</div>
+        <div class="stat-foot"><span class="stat-accent"></span><span data-i18n="dash.liveCount">live count</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="dash.known">Registered matches</div>
+        <div class="stat-value" id="stat-known">0</div>
+        <div class="stat-foot"><span class="stat-accent green"></span><span data-i18n="dash.consentedFaces">consented faces</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="dash.unknown">Unknown faces</div>
+        <div class="stat-value" id="stat-unknown">0</div>
+        <div class="stat-foot"><span class="stat-accent orange"></span><span data-i18n="dash.unregistered">unregistered</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="dash.alerts">Alerts (24h)</div>
+        <div class="stat-value" id="stat-alerts">0</div>
+        <div class="stat-foot"><span class="stat-accent red"></span><span data-i18n="dash.needsReview">needs review</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label" data-i18n="dash.unique">Unique people seen</div>
+        <div class="stat-value" id="stat-unique">0</div>
+        <div class="stat-foot"><span class="stat-accent blue"></span><span data-i18n="dash.session">this session</span></div>
+      </div>
+    </div>
+
+    <section class="card activity-card">
+      <div class="card-head">
+        <div>
+          <h2 data-i18n="dash.activity">Interpretation stream</h2>
+          <p class="card-sub" data-i18n="dash.activitySub">Speech, gestures, plates, and movement translated by AI</p>
+        </div>
+        <span class="chip" id="agent-chip" data-i18n="dash.localAi">Local AI</span>
+      </div>
+      <div class="activity-feed" id="activity-feed">
+        <div class="empty-inline" data-i18n="dash.waiting">Waiting for interpretable activity...</div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="dash-side">
+    <section class="card threat-card" id="threat-card">
+      <div class="card-head">
+        <div>
+          <h2 data-i18n="dash.threatMonitor">Threat monitor</h2>
+          <p class="card-sub" data-i18n="dash.threatSub">Visible restricted items and risk events</p>
+        </div>
+        <svg class="head-icon"><use href="#i-shield"></use></svg>
+      </div>
+      <div class="threat-state" id="threat-state">
+        <div class="orb"><svg><use href="#i-shield"></use></svg></div>
+        <div>
+          <div class="threat-title" data-i18n="dash.noThreat">No active threat</div>
+          <div class="threat-sub" data-i18n="dash.noThreatSub">Monitoring visible items and unknown visitors</div>
+        </div>
+      </div>
+      <div class="threat-footer">
+        <span data-i18n="dash.alarmState">Alarm system</span>
+        <span class="chip" id="alarm-chip" data-i18n="dash.soundOff">Sound off</span>
+      </div>
+    </section>
+
+    <section class="card alerts-card">
+      <div class="card-head">
+        <div>
+          <h2 data-i18n="dash.recentAlerts">Recent alerts</h2>
+          <p class="card-sub" data-i18n="dash.recentAlertsSub">Latest warnings and critical detections</p>
+        </div>
+        <a class="link" href="/events" data-i18n="common.viewAll">View all</a>
+      </div>
+      <div class="alert-list" id="recent-alerts">
+        <div class="empty-inline" data-i18n="common.loading">Loading...</div>
+      </div>
+    </section>
+
+    <section class="card pipeline-card">
+      <div class="card-head">
+        <div>
+          <h2 data-i18n="dash.pipeline">AI pipeline</h2>
+          <p class="card-sub" data-i18n="dash.pipelineSub">Live service health</p>
+        </div>
+      </div>
+      <div class="pipeline-list" id="pipeline-list">
+        <div class="pipe-row"><span class="pipe-name" data-i18n="dash.pipeObjects">Object / people tracking</span><span class="pipe-state" id="pipe-objects">...</span></div>
+        <div class="pipe-row"><span class="pipe-name" data-i18n="dash.pipePose">Pose &amp; gestures</span><span class="pipe-state" id="pipe-pose">...</span></div>
+        <div class="pipe-row"><span class="pipe-name" data-i18n="dash.pipeFaces">Face recognition</span><span class="pipe-state" id="pipe-faces">...</span></div>
+        <div class="pipe-row"><span class="pipe-name" data-i18n="dash.pipeOcr">Plate OCR</span><span class="pipe-state" id="pipe-ocr">...</span></div>
+        <div class="pipe-row"><span class="pipe-name" data-i18n="dash.pipeMic">Microphone</span><span class="pipe-state" id="pipe-mic">...</span></div>
+        <div class="pipe-row"><span class="pipe-name" data-i18n="dash.pipeAgent">Knowledge agent</span><span class="pipe-state" id="pipe-agent">...</span></div>
+      </div>
+      <div class="transcript-box" id="last-transcript" hidden>
+        <div class="transcript-label" data-i18n="dash.lastSpeech">Last speech</div>
+        <div class="transcript-text" id="last-transcript-text"></div>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<section class="card evidence-card">
+  <div class="card-head">
+    <div>
+      <h2 data-i18n="dash.recentEvidence">Recent evidence</h2>
+      <p class="card-sub" data-i18n="dash.recentEvidenceSub">Saved snapshots and events from this camera</p>
+    </div>
+    <a class="link" href="/events" data-i18n="common.openArchive">Open archive</a>
+  </div>
+  <div class="event-grid compact" id="recent-events">
+    <div class="empty-state" data-i18n="common.loading">Loading...</div>
+  </div>
+</section>
+
+<section class="consent-strip">
+  <svg><use href="#i-info"></use></svg>
+  <div>
+    <strong data-i18n="dash.consentTitle">Consent and legal notice</strong>
+    <span data-i18n="dash.consentText">Face recognition and audio monitoring are lawful only where you have clear legal authority and informed consent where required. Record only areas you are authorized to monitor. AI output is advisory and must be verified by a human. This system does not create nude or body-scan images and does not capture fingerprints.</span>
+  </div>
+  <a class="link" href="/about" data-i18n="common.learnMore">Learn more</a>
+</section>
+{% endblock %}
+{% block scripts %}<script src="/static/js/dashboard.js" defer></script>{% endblock %}

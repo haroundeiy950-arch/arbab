@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <div>
+    <h2 data-i18n="people.heading">Consent-based people registry</h2>
+    <p data-i18n="people.intro">Register people so the camera can display their name and photo when they appear. Only register people who gave informed consent, or where you have a lawful basis.</p>
+  </div>
+  <div class="intro-actions">
+    <button class="btn btn-primary" id="add-person"><svg><use href="#i-plus"></use></svg><span data-i18n="people.add">Register person</span></button>
+  </div>
+</section>
+
+<section class="notice-banner">
+  <svg><use href="#i-shield"></use></svg>
+  <div>
+    <strong data-i18n="people.noticeTitle">No liveness or fingerprint capture</strong>
+    <span data-i18n="people.noticeText">This demo uses face embeddings from ordinary photos. It cannot detect presentation attacks reliably and does not scan fingerprints. High-security access control needs certified biometric hardware and a human review process.</span>
+  </div>
+</section>
+
+<section class="registry-head">
+  <div class="muted" id="people-count">—</div>
+  <label class="search-inline">
+    <input type="search" id="people-search" placeholder="Filter by name..." data-i18n-placeholder="people.filter">
+  </label>
+</section>
+
+<div class="people-grid" id="people-grid">
+  <div class="empty-state" data-i18n="common.loading">Loading...</div>
+</div>
+
+<template id="person-modal-template">
+  <form class="stack-form" id="person-form" enctype="multipart/form-data">
+    <div class="form-grid two">
+      <label class="field">
+        <span data-i18n="people.name">Full name</span>
+        <input type="text" name="name" required maxlength="120" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="people.role">Role / department</span>
+        <input type="text" name="role" maxlength="120" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="people.company">Company / organization</span>
+        <input type="text" name="company" maxlength="120" autocomplete="off">
+      </label>
+      <label class="field">
+        <span data-i18n="people.photo">Photo</span>
+        <input type="file" name="photo" accept="image/*">
+      </label>
+    </div>
+    <label class="field">
+      <span data-i18n="people.notes">Notes</span>
+      <textarea name="notes" rows="2" maxlength="2000" placeholder="Why this person is registered..."></textarea>
+    </label>
+    <div class="capture-note">
+      <svg><use href="#i-camera"></use></svg>
+      <span data-i18n="people.captureNote">Leave the photo empty to capture the largest face currently in front of the live camera. Upload a clear, front-facing photo for best accuracy.</span>
+    </div>
+    <label class="check-row consent-row">
+      <input type="checkbox" name="consent" value="1" required>
+      <span data-i18n="people.consent">I confirm this person gave informed consent to local face recognition, or that I have a clear legal basis to register them.</span>
+    </label>
+    <div class="form-actions">
+      <button type="button" class="btn btn-ghost modal-close" data-i18n="common.cancel">Cancel</button>
+      <button type="submit" class="btn btn-primary" id="person-submit" data-i18n="people.submit">Register face</button>
+    </div>
+  </form>
+</template>
+{% endblock %}
+{% block scripts %}<script src="/static/js/people.js" defer></script>{% endblock %}

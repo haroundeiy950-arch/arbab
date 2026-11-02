@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <div>
+    <h2 data-i18n="knowledge.heading">Company knowledge base</h2>
+    <p data-i18n="knowledge.intro">The AI assistant answers visitor questions only from these documents. Upload Markdown, text, or PDF files. PDFs are searchable but not editable here.</p>
+  </div>
+  <div class="intro-actions">
+    <input type="file" id="knowledge-upload" accept=".md,.txt,.pdf" hidden>
+    <button class="btn" id="upload-knowledge"><svg><use href="#i-upload"></use></svg><span data-i18n="knowledge.upload">Upload document</span></button>
+    <button class="btn" id="reindex-knowledge"><svg><use href="#i-bolt"></use></svg><span data-i18n="knowledge.reindex">Reindex</span></button>
+    <button class="btn btn-primary" id="new-document"><svg><use href="#i-plus"></use></svg><span data-i18n="knowledge.new">New document</span></button>
+  </div>
+</section>
+
+<div class="knowledge-stats">
+  <div class="stat-card small"><div class="stat-label" data-i18n="knowledge.docs">Documents</div><div class="stat-value" id="k-docs">0</div></div>
+  <div class="stat-card small"><div class="stat-label" data-i18n="knowledge.chunks">Searchable chunks</div><div class="stat-value" id="k-chunks">0</div></div>
+  <div class="stat-card small"><div class="stat-label" data-i18n="knowledge.agent">Answer provider</div><div class="stat-value text-sm" id="k-provider">local-rag</div></div>
+</div>
+
+<div class="knowledge-layout">
+  <aside class="card doc-list-card">
+    <div class="card-head">
+      <h2 data-i18n="knowledge.files">Documents</h2>
+    </div>
+    <div class="doc-list" id="knowledge-docs">
+      <div class="empty-inline" data-i18n="common.loading">Loading...</div>
+    </div>
+    <div class="doc-search">
+      <label class="field compact">
+        <span data-i18n="knowledge.testSearch">Test retrieval</span>
+        <input type="search" id="k-search" placeholder="Ask what a visitor might ask...">
+      </label>
+      <button class="btn btn-ghost btn-block" id="k-search-btn" data-i18n="knowledge.search">Search knowledge</button>
+      <div class="search-results" id="k-results"></div>
+    </div>
+  </aside>
+
+  <section class="card editor-card">
+    <div class="card-head">
+      <div>
+        <h2 id="editor-title" data-i18n="knowledge.editor">Document editor</h2>
+        <p class="card-sub" id="editor-path">Select a document to begin</p>
+      </div>
+      <div class="head-right">
+        <span class="chip" id="editor-status" data-i18n="knowledge.saved">Saved</span>
+        <button class="btn btn-primary" id="save-document"><span data-i18n="common.save">Save document</span></button>
+      </div>
+    </div>
+    <div class="editor-meta">
+      <label class="field compact grow">
+        <span data-i18n="knowledge.filename">File name</span>
+        <input type="text" id="editor-filename" value="company.md" maxlength="120">
+      </label>
+    </div>
+    <textarea id="knowledge-editor" class="document-editor" spellcheck="false" placeholder="# Company knowledge&#10;&#10;Add the facts the AI assistant may answer..."></textarea>
+    <div class="editor-foot">
+      <span class="muted" data-i18n="knowledge.editorHint">Markdown is supported. Reindex automatically runs after saving.</span>
+      <span class="muted mono" id="editor-chars">0 chars</span>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/knowledge.js" defer></script>{% endblock %}

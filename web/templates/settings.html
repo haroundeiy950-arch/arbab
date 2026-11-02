@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+  <div>
+    <h2 data-i18n="settings.heading">System configuration</h2>
+    <p data-i18n="settings.intro">Tune the camera, AI engines, audio monitoring, alerts, translation, and retention. Changes apply immediately unless marked otherwise.</p>
+  </div>
+  <div class="intro-actions">
+    <button class="btn" id="reload-settings" data-i18n="common.reset">Reload</button>
+    <button class="btn btn-primary" id="save-settings" data-i18n="settings.save">Save settings</button>
+  </div>
+</section>
+
+<form id="settings-form" class="settings-form">
+  <section class="card settings-section">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div><h2 data-i18n="settings.camera">Camera source</h2><p data-i18n="settings.cameraSub">USB camera index, video file, or RTSP URL</p></div>
+    </div>
+    <div class="form-grid three">
+      <label class="field">
+        <span data-i18n="settings.source">Source</span>
+        <input type="text" data-setting="camera_source" placeholder="0">
+        <small data-i18n="settings.sourceHint">0 = default webcam. You can also enter a file path or rtsp:// URL. The camera restarts when saved.</small>
+      </label>
+      <label class="field">
+        <span data-i18n="settings.width">Frame width</span>
+        <input type="number" data-setting="frame_width" min="320" max="1920" step="10">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.height">Frame height</span>
+        <input type="number" data-setting="frame_height" min="240" max="1080" step="10">
+      </label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.aiEnabled">AI processing</strong><span data-i18n="settings.aiEnabledSub">Master switch for all computer vision models</span></div>
+      <label class="switch"><input type="checkbox" data-setting="ai_enabled"><span class="track"></span></label>
+    </div>
+  </section>
+
+  <section class="card settings-section">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div><h2 data-i18n="settings.vision">Vision intelligence</h2><p data-i18n="settings.visionSub">People counting, faces, gestures, threats, glasses, and plates</p></div>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.count">People counting and tracking</strong><span data-i18n="settings.countSub">Live count plus unique visitor IDs during the session</span></div>
+      <label class="switch"><input type="checkbox" data-setting="count_persons"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.face">Face recognition</strong><span data-i18n="settings.faceSub">Match consent-based registry faces only</span></div>
+      <label class="switch"><input type="checkbox" data-setting="face_recognition"><span class="track"></span></label>
+    </div>
+    <div class="form-grid three">
+      <label class="field">
+        <span data-i18n="settings.faceThreshold">Face match threshold</span>
+        <input type="number" data-setting="face_match_threshold" min="0.1" max="0.9" step="0.01">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.personConf">Person confidence</span>
+        <input type="number" data-setting="person_confidence" min="0.1" max="0.95" step="0.01">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.interval">AI analysis interval (seconds)</span>
+        <input type="number" data-setting="detection_interval" min="0.15" max="5" step="0.05">
+      </label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.gesture">Gesture and sign interpretation</strong><span data-i18n="settings.gestureSub">Wave, raised hand, stop, welcome, yes, and no from pose</span></div>
+      <label class="switch"><input type="checkbox" data-setting="gesture_recognition"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.plate">License plate recognition</strong><span data-i18n="settings.plateSub">Plate OCR plus local vehicle registry lookup</span></div>
+      <label class="switch"><input type="checkbox" data-setting="plate_recognition"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.threat">Restricted visible items</strong><span data-i18n="settings.threatSub">COCO knife/scissors/bat plus optional custom weapon model</span></div>
+      <label class="switch"><input type="checkbox" data-setting="threat_detection"><span class="track"></span></label>
+    </div>
+    <div class="form-grid two">
+      <label class="field">
+        <span data-i18n="settings.restricted">Restricted classes (comma separated)</span>
+        <input type="text" data-setting="restricted_classes">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.glasses">Eyewear classification</span>
+        <select data-setting="glasses_detection">
+          <option value="1">On</option><option value="0">Off</option>
+        </select>
+        <small data-i18n="settings.glassesHint">Heuristic only. It cannot prove that glasses contain a camera.</small>
+      </label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.smartGlasses">Warn on possible smart glasses</strong><span data-i18n="settings.smartGlassesSub">Advisory warning only, never a weapon alarm</span></div>
+      <label class="switch"><input type="checkbox" data-setting="smart_glasses_alerts"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.privacyBlur">Blur unknown faces in the live view</strong><span data-i18n="settings.privacyBlurSub">Evidence snapshots remain unblurred for authorized review</span></div>
+      <label class="switch"><input type="checkbox" data-setting="privacy_blur_unknown"><span class="track"></span></label>
+    </div>
+  </section>
+
+  <section class="card settings-section">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div><h2 data-i18n="settings.alerts">Alerts &amp; evidence</h2><p data-i18n="settings.alertsSub">Siren, automatic snapshots, motion clips, and retention</p></div>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.alarm">Loud alarm on critical detections</strong><span data-i18n="settings.alarmSub">Browser siren and spoken warning with person name and item</span></div>
+      <label class="switch"><input type="checkbox" data-setting="alarm_enabled"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.unknownAlert">Alert on unknown faces</strong><span data-i18n="settings.unknownAlertSub">Save a warning when a face is not in the registry</span></div>
+      <label class="switch"><input type="checkbox" data-setting="alert_unknown_person"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.motion">Save meaningful motion snapshots</strong><span data-i18n="settings.motionSub">Frame-difference motion with snapshot evidence</span></div>
+      <label class="switch"><input type="checkbox" data-setting="auto_save_motion"><span class="track"></span></label>
+    </div>
+    <div class="form-grid three">
+      <label class="field">
+        <span data-i18n="settings.motionThreshold">Motion threshold</span>
+        <input type="number" data-setting="motion_threshold" min="0.001" max="0.5" step="0.005">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.retention">Evidence retention (days)</span>
+        <input type="number" data-setting="retention_days" min="1" max="365" step="1">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.riskScan">Privacy-safe risk inspection</span>
+        <select data-setting="risk_scan_enabled"><option value="1">Enabled</option><option value="0">Disabled</option></select>
+        <small data-i18n="settings.riskScanHint">Blurred bodies, visible items only. No body scan or nudity generation.</small>
+      </label>
+    </div>
+  </section>
+
+  <section class="card settings-section">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div><h2 data-i18n="settings.audio">Audio, speech &amp; translation</h2><p data-i18n="settings.audioSub">Microphone monitoring, Whisper transcription, and AI translation</p></div>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.audioOn">Microphone monitoring</strong><span data-i18n="settings.audioOnSub">Record speech when sound is detected. Requires consent and legal approval.</span></div>
+      <label class="switch"><input type="checkbox" data-setting="audio_monitor"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.transcribe">Transcribe speech with Whisper</strong><span data-i18n="settings.transcribeSub">Local CPU transcription; first use downloads the model</span></div>
+      <label class="switch"><input type="checkbox" data-setting="transcribe_audio"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.translate">Translate events and speech</strong><span data-i18n="settings.translateSub">Arabic and English translations attached to evidence</span></div>
+      <label class="switch"><input type="checkbox" data-setting="translate_events"><span class="track"></span></label>
+    </div>
+    <div class="settings-row">
+      <div class="setting-copy"><strong data-i18n="settings.autoAnswer">Answer spoken questions automatically</strong><span data-i18n="settings.autoAnswerSub">Transcribed questions are answered from company knowledge and spoken by the dashboard</span></div>
+      <label class="switch"><input type="checkbox" data-setting="auto_answer_questions"><span class="track"></span></label>
+    </div>
+    <div class="form-grid three">
+      <label class="field">
+        <span data-i18n="settings.audioThreshold">Voice threshold (RMS)</span>
+        <input type="number" data-setting="audio_threshold" min="50" max="10000" step="10">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.targets">Translation targets</span>
+        <input type="text" data-setting="translation_targets" placeholder="en,ar">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.notificationLanguage">Notification language</span>
+        <select data-setting="notification_language">
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="card settings-section">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div><h2 data-i18n="settings.organization">Organization &amp; assistant</h2><p data-i18n="settings.organizationSub">Company name used in the knowledge base and greeting</p></div>
+    </div>
+    <div class="form-grid two">
+      <label class="field">
+        <span data-i18n="settings.company">Company name</span>
+        <input type="text" data-setting="company_name" maxlength="120">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.llm">Agent provider</span>
+        <input type="text" id="provider-readonly" readonly>
+        <small data-i18n="settings.llmHint">Set OPENAI_API_KEY / OPENAI_BASE_URL / OPENAI_MODEL in .env to enable deeper answers.</small>
+      </label>
+    </div>
+  </section>
+</form>
+
+<div class="settings-lower">
+  <section class="card settings-section">
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <div><h2 data-i18n="settings.security">Security</h2><p data-i18n="settings.securitySub">Change the administrator password</p></div>
+    </div>
+    <form id="password-form" class="stack-form">
+      <div class="form-grid three">
+        <label class="field"><span data-i18n="settings.currentPassword">Current password</span><input type="password" id="current-password" autocomplete="current-password" required></label>
+        <label class="field"><span data-i18n="settings.newPassword">New password</span><input type="password" id="new-password" minlength="10" autocomplete="new-password" required></label>
+        <label class="field"><span data-i18n="settings.confirmPassword">Confirm new password</span><input type="password" id="confirm-password" minlength="10" autocomplete="new-password" required></label>
+      </div>
+      <div class="form-actions left"><button type="submit" class="btn" data-i18n="settings.changePassword">Change password</button></div>
+    </form>
+  </section>
+
+  <section class="card settings-section">
+    <div class="section-head">
+      <div class="section-num">07</div>
+      <div><h2 data-i18n="settings.maintenance">Maintenance</h2><p data-i18n="settings.maintenanceSub">Model health and evidence retention</p></div>
+    </div>
+    <div class="model-status" id="model-status"></div>
+    <div class="maintenance-actions">
+      <button class="btn" id="cleanup-events" data-i18n="settings.cleanup">Run retention cleanup</button>
+    </div>
+    <p class="mini-note" data-i18n="settings.envNote">Secrets and model endpoints are configured in the .env file, not in this page. Restart the app after changing them.</p>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/settings.js" defer></script>{% endblock %}
